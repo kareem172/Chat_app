@@ -9,8 +9,7 @@ const User = mongoose.model("User", userSchema);
 
 const createUser = async (name, email, password) => {
   const user = new User({ name, email, password });
-  await user.save();
-  return user;
+  return await user.save();
 };
 
 const findUserByEmail = async (email) => {
