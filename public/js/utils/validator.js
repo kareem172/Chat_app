@@ -36,17 +36,39 @@ export class Validator {
     return value === password ? "" : "Passwords do not match";
   };
 
-  static setupValidation = (input, validateFn) => {
+  static setupValidation = (input, validateFn, dependence) => {
     const errorElement = Validator.createErrorElement();
     input.parentNode.insertBefore(errorElement, input.nextSibling);
 
     input.addEventListener("input", () => {
-      const error = validateFn(input.value);
+      let error;
+      if (validateFn === Validator.validateConfirmPassword) {
+        error = validateFn(input.value, dependence.passwordInput.value);
+      } else error = validateFn(input.value);
       errorElement.textContent = error;
       errorElement.classList.toggle("hidden", !error);
       input.style.borderColor = error ? "#ff4444" : "#5cbb60";
     });
 
     return () => validateFn(input.value);
+  };
+
+  static validateForm = (form, validators) => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const errors = validators.map((validate) => validate());
+      if (errors.every((error) => !error)) {
+        console.log("Form submitted successfully");
+        form.submit();
+      } else {
+        errors.forEach((error, index) => {
+          if (error) {
+            const input = form.elements[index];
+            input.nextElementSibling.textContent = error;
+            input.nextElementSibling.classList.remove("hidden");
+          }
+        });
+      }
+    });
   };
 }
