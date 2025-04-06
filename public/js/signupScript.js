@@ -16,12 +16,3 @@ const validators = [
 ];
 
 Validator.validateForm(signupForm, validators);
-
-// signupForm.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const errors = validators.map((validate) => validate());
-//   if (errors.every((error) => !error)) {
-//     console.log("Form submitted successfully");
-//     signupForm.submit();
-//   }
-// });
