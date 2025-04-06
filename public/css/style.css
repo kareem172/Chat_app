@@ -12,7 +12,8 @@ body {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+textarea {
   @apply w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-300 focus:ring focus:outline-none;
 }
 
@@ -28,4 +29,11 @@ input[type="password"] {
 
 .error-message {
   @apply text-sm text-red-500;
+}
+
+.scrollbar::-webkit-scrollbar {
+  @apply w-1 rounded-md bg-background;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-primary/80;
 }

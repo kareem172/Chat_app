@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>ChatApp | My Chats</title>
+</head>
+
+<body>
+    <%- include("components/header.ejs") %>
+        <main class=" px-6 py-4 flex-1  max-h-[calc(100dvh-135px)] overflow-clip grid grid-cols-[24rem_1fr]">
+            <aside class="scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary pr-2 space-y-3">
+                <!-- chats -->
+                <% for(let k=0; k < chats.length; k++) {%>
+                    <div class="flex w-full gap-2 border-b-2 border-secondary pb-2">
+                        <span
+                            class="rounded-2xl inline-flex bg-primary w-12 aspect-square justify-center items-center text-2xl font-bold">
+                            <%= chats[k].name.slice(0,2) %>
+                        </span>
+                        <div class="chat-info flex-1">
+
+                            <h3>
+                                <%= chats[k].name %>
+                            </h3>
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-sm">
+                                    <%= chats[k].lastMessage %>
+                                </span>
+                                <span class="text-xs text-gray-400">
+                                    <%= chats[k].time %>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <%} %>
+            </aside>
+            <main class=" px-4 flex flex-col max-h-full h-full">
+                <section class="flex-1">
+                </section>
+                <footer>
+                    <form class="flex gap-3">
+                        <textarea rows="1" type="text" name="message" id="message"
+                            placeholder="Type your message"></textarea>
+                        <button type="submit"
+                            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">Send</button>
+                    </form>
+                </footer>
+            </main>
+        </main>
+        <%- include("components/footer.ejs") %>
+</body>
+
+</html>

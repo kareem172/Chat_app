@@ -9,6 +9,7 @@ const dotenv = require("dotenv");
 const homeRoute = require("./routes/pages/homeRoute");
 const signupRoute = require("./routes/pages/signupRoute");
 const signinRoute = require("./routes/pages/signinRoute");
+const chatRoute = require("./routes/pages/chatRoute");
 //#endregion
 
 dotenv.config();
@@ -43,6 +44,7 @@ app.use(flash());
 app.use("/", homeRoute);
 app.use("/signup", signupRoute);
 app.use("/signin", signinRoute);
+app.use("/chat", chatRoute);
 //#endregion
 
 app.listen(PORT, () => {
