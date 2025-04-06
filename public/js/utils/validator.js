@@ -49,7 +49,8 @@ export class Validator {
       errorElement.classList.toggle("hidden", !error);
       input.style.borderColor = error ? "#ff4444" : "#5cbb60";
     });
-
+    if (validateFn === Validator.validateConfirmPassword)
+      return () => validateFn(input.value, dependence.passwordInput.value);
     return () => validateFn(input.value);
   };
 
