@@ -15,6 +15,13 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+app.get("/signup", (req, res) => {
+  res.render("signup.ejs");
+});
+app.get("/signin", (req, res) => {
+  res.render("signin.ejs");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

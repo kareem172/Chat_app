@@ -1,10 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #2C3639;
-  --color-foreground: #DCD7C9;
-  --color-primary: #A27B5C;
-  --color-secondary: #3F4E4F;
+  --color-background: #2c3639;
+  --color-foreground: #dcd7c9;
+  --color-primary: #a27b5c;
+  --color-secondary: #3f4e4f;
+}
+body {
+  @apply flex min-h-screen flex-col bg-background text-foreground;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  @apply w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-300 focus:ring focus:outline-none;
+}
+
+.btn {
+  @apply cursor-pointer rounded-md bg-primary px-4 py-2 text-white transition-colors duration-300 hover:bg-primary/80;
+}
+.btn-secondary {
+  @apply cursor-pointer rounded-md border-2 border-primary px-4 py-2 text-white transition-colors duration-300 hover:bg-primary/20;
 }
 .container {
   @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
