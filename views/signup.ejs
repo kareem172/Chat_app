@@ -12,11 +12,14 @@
 <body>
     <%- include("components/header.ejs") %>
         <main class=" flex-1 container mx-auto px-4 py-8 flex flex-col justify-center items-center ">
-            <form id="signup-form" class="w-full" action="/signup" method="post">
+            <form id="signup-form" class="w-full mb-3" action="/signup" method="post">
                 <header class="space-y-3 mb-12  text-center">
                     <h1 class="text-3xl text-primary font-semibold">Join The Best Chatting App</h1>
                     <p class="text-foreground/80">Enjoy the experience</p>
                 </header>
+                <div class="text-center">
+                    <%- include("components/alert.ejs") %>
+                </div>
                 <div class="space-y-4 max-w-xl mx-auto">
                     <div class="flex flex-col gap-4">
                         <label for="username">Name</label>
@@ -37,11 +40,11 @@
                     <div class="flex flex-col gap-4">
                         <button class="btn">Signup</button>
                     </div>
-                    <p class="text-foreground/80 text-center">Already have an account? <a href="/signin"
-                            class="text-primary">Signin</a>
-                    </p>
                 </div>
             </form>
+            <p class="text-foreground/80 text-center">Already have an account? <a href="/signin"
+                    class="text-primary">Signin</a>
+            </p>
         </main>
         <%- include("components/footer.ejs") %>
 </body>
