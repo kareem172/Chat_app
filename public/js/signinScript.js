@@ -9,12 +9,4 @@ const validators = [
   Validator.setupValidation(passwordInput, Validator.validatePassword),
 ];
 
-signinForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const errors = validators.map((validate) => validate());
-
-  if (errors.every((error) => !error)) {
-    console.log("Form submitted successfully");
-    signinForm.submit();
-  }
-});
+Validator.validateForm(signinForm, validators);
