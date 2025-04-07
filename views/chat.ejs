@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/output.css">
+    <script src="/js/chatScript.js" defer></script>
     <title>ChatApp | My Chats</title>
 </head>
 
@@ -15,8 +16,8 @@
                 class="scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary pr-2 space-y-3">
                 <!-- chats -->
                 <% for(let i=0; i < conversations.length; i++) {%>
-                    <div
-                        class="flex w-full gap-2 border-b-2 border-secondary p-2 cursor-pointer hover:bg-white/10 transition-colors ">
+                    <div class="flex w-full gap-2 border-b-2 border-secondary p-2 cursor-pointer hover:bg-white/10 transition-colors"
+                        click="getConversation(<%= conversations[i].conversationId %>)">
                         <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
                             %> alt=<%= conversations[i].username.slice(0,2) %>>
                             <div class="chat-info flex-1">
@@ -38,7 +39,8 @@
                     <%} %>
             </aside>
             <main class=" px-4 flex flex-col max-h-full h-full">
-                <section class="flex-1">
+                <section id="chat-area" class="flex-1 grid">
+                    <span class="place-self-center text-foreground/50"> Please select a chat to start</span>
                 </section>
                 <footer>
                     <form class="flex gap-3">
