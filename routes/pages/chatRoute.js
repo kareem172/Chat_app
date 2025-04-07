@@ -1,11 +1,7 @@
 const express = require("express");
+const ChatController = require("../../controllers/chatController");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.render("chat.ejs", {
-    user: req.session.user,
-    chats: [],
-  });
-});
+router.get("/", ChatController.getAllChats);
 
 module.exports = router;
