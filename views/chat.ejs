@@ -11,28 +11,29 @@
 <body>
     <%- include("components/header.ejs") %>
         <main class=" px-6 py-4 flex-1  max-h-[calc(100dvh-135px)] overflow-clip grid grid-cols-[24rem_1fr]">
-            <aside class="scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary pr-2 space-y-3">
+            <aside
+                class="scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary pr-2 space-y-3">
                 <!-- chats -->
-                <% for(let k=0; k < chats.length; k++) {%>
-                    <div class="flex w-full gap-2 border-b-2 border-secondary pb-2">
-                        <span
-                            class="rounded-2xl inline-flex bg-primary w-12 aspect-square justify-center items-center text-2xl font-bold">
-                            <%= chats[k].name.slice(0,2) %>
-                        </span>
-                        <div class="chat-info flex-1">
+                <% for(let i=0; i < conversations.length; i++) {%>
+                    <div
+                        class="flex w-full gap-2 border-b-2 border-secondary p-2 cursor-pointer hover:bg-white/10 transition-colors ">
+                        <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
+                            %> alt=<%= conversations[i].username.slice(0,2) %>>
+                            <div class="chat-info flex-1">
 
-                            <h3>
-                                <%= chats[k].name %>
-                            </h3>
-                            <div class="flex justify-between items-baseline">
-                                <span class="text-sm">
-                                    <%= chats[k].lastMessage %>
-                                </span>
-                                <span class="text-xs text-gray-400">
-                                    <%= chats[k].time %>
-                                </span>
+                                <h3>
+                                    <%= conversations[i].username %>
+                                </h3>
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-sm">
+                                        <%= conversations[i].lastMessage.content %>
+                                    </span>
+                                    <span class="text-xs text-gray-400">
+                                        <%= conversations[i].lastMessage.sentAt.toLocaleString('en-US', {
+                                            hour: 'numeric' ,minute: 'numeric' , hour12: true }) %>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <%} %>
             </aside>
