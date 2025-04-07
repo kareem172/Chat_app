@@ -1,7 +1,7 @@
 const { Conversation } = require("../models/conversations");
 
 class ChatController {
-  getAllChats = async (req, res) => {
+  async getAllChats(req, res) {
     const user = req.session.user;
     const conversations = await Conversation.find({
       participants: user._id,
@@ -27,7 +27,7 @@ class ChatController {
       user,
       conversations: formattedConversations,
     });
-  };
+  }
 }
 
-module.exports = ChatController;
+module.exports = new ChatController();
