@@ -17,7 +17,7 @@
                 <!-- chats -->
                 <% for(let i=0; i < conversations.length; i++) {%>
                     <div class="flex w-full gap-2 border-b-2 border-secondary p-2 cursor-pointer hover:bg-white/10 transition-colors"
-                        click="getConversation(<%= conversations[i].conversationId %>)">
+                        onclick="getConversation('<%= conversations[i].conversationId %>','<%= user._id %>')">
                         <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
                             %> alt=<%= conversations[i].username.slice(0,2) %>>
                             <div class="chat-info flex-1">
@@ -38,9 +38,11 @@
                     </div>
                     <%} %>
             </aside>
+            <!-- Messages -->
             <main class=" px-4 flex flex-col max-h-full h-full">
-                <section id="chat-area" class="flex-1 grid">
-                    <span class="place-self-center text-foreground/50"> Please select a chat to start</span>
+                <section id="chat-area" class="flex-1 flex py-4 flex-col gap-6 @container/chat ">
+                    <span class=" flex-1 flex justify-center items-center text-foreground/50"> Please select a chat to
+                        start</span>
                 </section>
                 <footer>
                     <form class="flex gap-3">

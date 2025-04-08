@@ -31,6 +31,16 @@ textarea {
   @apply text-sm text-red-500;
 }
 
+.chat-bubble {
+  @apply w-fit max-w-[80%] rounded-xl px-4 py-2 text-white;
+  &.sent-message {
+    @apply place-self-end rounded-br-none rounded-bl-md bg-primary;
+  }
+  &.received-message {
+    @apply rounded-bl-none bg-secondary;
+  }
+}
+
 .scrollbar::-webkit-scrollbar {
   @apply w-1 rounded-md bg-background;
 }

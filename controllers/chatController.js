@@ -22,7 +22,6 @@ class ChatController {
         updatedAt: con.updatedAt,
       };
     });
-    console.log(conversations[1].participants);
     res.render("chat.ejs", {
       user,
       conversations: formattedConversations,
