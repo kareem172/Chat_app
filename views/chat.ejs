@@ -20,16 +20,15 @@
                         onclick="getConversation('<%= conversations[i].conversationId %>','<%= user._id %>')">
                         <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
                             %> alt=<%= conversations[i].username.slice(0,2) %>>
-                            <div class="chat-info flex-1">
-
+                            <div class="chat-info flex-1 max-w-full overflow-hidden">
                                 <h3>
                                     <%= conversations[i].username %>
                                 </h3>
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-sm">
+                                <div class="flex justify-between items-baseline gap-4 max-w-full overflow-hidden">
+                                    <span class="text-sm text-ellipsis max-w-full overflow-hidden text-gray-300">
                                         <%= conversations[i].lastMessage.content %>
                                     </span>
-                                    <span class="text-xs text-gray-400">
+                                    <span class="text-xs text-gray-400 whitespace-nowrap">
                                         <%= conversations[i].lastMessage.sentAt.toLocaleString('en-US', {
                                             hour: 'numeric' ,minute: 'numeric' , hour12: true }) %>
                                     </span>
@@ -39,17 +38,18 @@
                     <%} %>
             </aside>
             <!-- Messages -->
-            <main class=" px-4 flex flex-col max-h-full h-full">
-                <section id="chat-area" class="flex-1 flex py-4 flex-col gap-6 @container/chat ">
+            <main class=" px-4 flex flex-col max-h-[calc(100dvh-170px)] h-full overflow-hidden max-w-full">
+                <section id="chat-area"
+                    class="flex-1 flex py-4 px-2 flex-col gap-6 @container/chat max-h-full overflow-auto scrollbar scroll-smooth">
                     <span class=" flex-1 flex justify-center items-center text-foreground/50"> Please select a chat to
                         start</span>
                 </section>
                 <footer>
-                    <form class="flex gap-3">
-                        <textarea rows="1" type="text" name="message" id="message"
-                            placeholder="Type your message"></textarea>
-                        <button type="submit"
-                            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">Send</button>
+                    <form id="chat-form" class="flex items-end gap-3 max-w-full overflow-hidden">
+                        <textarea name="message" id="message" placeholder="Type your message"
+                            class="scrollbar w-full max-h-[5rem] min-h-[2.5rem] resize-none field-sizing-content rounded-2xl border border-gray-300 px-4 py-2 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                            rows="1"></textarea>
+                        <button type="submit" class="btn">Send</button>
                     </form>
                 </footer>
             </main>

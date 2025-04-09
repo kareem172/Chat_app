@@ -32,13 +32,21 @@ textarea {
 }
 
 .chat-bubble {
-  @apply w-fit max-w-[80%] rounded-xl px-4 py-2 text-white;
+  @apply w-fit max-w-[80%] overflow-clip rounded-xl px-4 py-2 text-white transition-transform transition-discrete duration-300;
   &.sent-message {
-    @apply place-self-end rounded-br-none rounded-bl-md bg-primary;
+    @apply origin-bottom-right place-self-end rounded-br-none rounded-bl-md bg-primary;
   }
   &.received-message {
-    @apply rounded-bl-none bg-secondary;
+    @apply origin-bottom-left rounded-bl-none bg-secondary;
   }
+}
+
+.new-message {
+  animation: bubble-in 0.3s ease-in-out;
+}
+
+.chat-content {
+  @apply max-w-full overflow-clip text-wrap break-all whitespace-pre-wrap;
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -46,4 +54,13 @@ textarea {
 }
 .scrollbar::-webkit-scrollbar-thumb {
   @apply rounded-md bg-primary/80;
+}
+
+@keyframes bubble-in {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
