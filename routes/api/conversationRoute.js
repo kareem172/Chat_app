@@ -1,13 +1,10 @@
 const express = require("express");
-const { Message } = require("../../models/messages");
+
+const conversationController = require("../../controllers/conversationController");
 const router = express.Router();
 
-router.get("/:conversationId", async (req, res) => {
-  const { conversationId } = req.params;
-  const messages = await Message.find({ conversationId }).sort({
-    createdAt: 1,
-  });
-  res.status(200).json({ messages });
-});
+router.get("/:conversationId", conversationController.getConversation);
+
+router.post("/:conversationId", conversationController.sendMessage);
 
 module.exports = router;
