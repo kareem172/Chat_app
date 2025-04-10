@@ -5,6 +5,30 @@
   --color-foreground: #dcd7c9;
   --color-primary: #a27b5c;
   --color-secondary: #3f4e4f;
+
+  --animate-fade-down: fadeDown 0.5s ease-in forwards;
+  --animate-fade-out-up: fadeOutUp 0.5s ease-in forwards;
+
+  @keyframes fadeDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeOutUp {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
 }
 body {
   @apply flex min-h-screen flex-col bg-background text-foreground;
