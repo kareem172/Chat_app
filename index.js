@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const flash = require("express-flash");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 //#region importing routes
 // pages routes
@@ -14,6 +15,10 @@ const chatRoute = require("./routes/pages/chatRoute");
 
 //api routes
 const conversationRoute = require("./routes/api/conversationRoute");
+//#endregion
+
+//#region importing Middlewares
+const authMiddleware = require("./middlewares/authMiddleware");
 //#endregion
 
 dotenv.config();
@@ -29,10 +34,12 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 //#endregion
+
 //#region middlewares
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -40,8 +47,15 @@ app.use(
     saveUninitialized: true,
   }),
 );
-
+app.use(authMiddleware);
 app.use(flash());
+
+// setting up locals
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user || null;
+  res.locals.isAuthenticated = req.isAuthenticated;
+  next();
+});
 //#endregion
 
 //#region page routes
