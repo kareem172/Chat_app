@@ -28,9 +28,18 @@ class ConversationController {
 
   async getConversationMessages(req, res) {
     const { conversationId } = req.params;
+
     const messages = await Message.find({ conversationId }).sort({
       createdAt: 1,
     });
+    await Message.updateMany(
+      {
+        conversationId,
+        receiverId: user._id,
+        isRead: false,
+      },
+      { $set: { isRead: true } },
+    );
     res.status(200).json({ data: messages, status: "success" });
   }
 
