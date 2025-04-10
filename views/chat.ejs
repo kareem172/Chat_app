@@ -16,7 +16,7 @@
                 class="conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary p-2 space-y-3">
                 <!-- chats -->
                 <% for(let i=0; i < conversations.length; i++) {%>
-                    <div class="conversation-tap <%= conversations[i].lastMessage.isRead ? '':'unread-conversation' %>"
+                    <div class="conversation-tap <%= (!conversations[i].lastMessage.isRead && conversations[i].lastMessage.senderId !== user._id) ? '':'unread-conversation' %>"
                         data-conversation-id='<%= conversations[i].conversationId %>' data-user-id='<%= user._id %>'>
                         <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
                             %> alt=<%= conversations[i].username.slice(0,2) %>>
