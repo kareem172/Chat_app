@@ -11,7 +11,7 @@ class ConversationController {
   }
 
   async sendMessage(req, res) {
-    const user = req.session.user;
+    const user = req.user;
     const { conversationId } = req.params;
     const { receiverId, content } = req.body;
     const newMessage = new Message({
