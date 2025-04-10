@@ -1,6 +1,10 @@
 const { Conversation } = require("../models/conversations");
 class ChatController {
   async getAllChats(req, res) {
+    if (!req.isAuthenticated) {
+      req.flash("toast", "You must be signed in to be able to chat");
+      return res.redirect("/signin");
+    }
     const user = req.user;
     const conversations = await Conversation.find({
       participants: user._id,
