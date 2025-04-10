@@ -1,4 +1,8 @@
-import { getConversation, currentConversationId } from "./chatServices.js";
+import {
+  getConversation,
+  currentConversationId,
+  getConversationMessages,
+} from "./chatServices.js";
 import {
   renderNewConversationTap,
   renderNewMessage,
@@ -22,7 +26,9 @@ function socketHandler() {
       const conversation = await getConversation(conversationId);
       console.log("🚀 ~ socket.on ~ conversation:", conversation);
       tap.remove();
-      renderNewConversationTap(conversation, userId);
+      renderNewConversationTap(conversation, userId, async () => {
+        await getConversationMessages(conversationId, userId);
+      });
     }
   });
 
