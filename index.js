@@ -15,6 +15,7 @@ const chatRoute = require("./routes/pages/chatRoute");
 
 //api routes
 const conversationRoute = require("./routes/api/conversationRoute");
+const authRoute = require("./routes/api/authRoute");
 //#endregion
 
 //#region importing Middlewares
@@ -67,6 +68,7 @@ app.use("/chat", chatRoute);
 
 //#region Api routes
 app.use("/api/conversation", conversationRoute);
+app.use("/api/auth", authRoute);
 //#endregion
 
 app.listen(PORT, () => {
