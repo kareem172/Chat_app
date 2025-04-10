@@ -3,8 +3,12 @@ import {
   renderNewConversationTap,
   renderNewMessage,
 } from "../utils/uiElementsGenerators.js";
-
-function socketHandler(socket) {
+import { getSocket } from "./socketManager.js";
+function socketHandler() {
+  const socket = getSocket();
+  socket.on("connect", () => {
+    console.log("Connected to server");
+  });
   socket.on("newMessage", async ({ message, conversationId }) => {
     if (conversationId === currentConversationId) {
       renderNewMessage(message, false);

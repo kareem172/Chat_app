@@ -1,14 +1,12 @@
-import { io } from "https://cdn.socket.io/4.7.2/socket.io.esm.min.js";
 import {
   getConversationMessages,
   sendMessage,
 } from "./services/chatServices.js";
+import { initSocket } from "./services/socketManager.js";
 import { socketHandler } from "./services/socketServices.js";
-const socket = io();
 
-socket.on("connect", () => {
-  socketHandler(socket);
-});
+const socket = initSocket();
+socketHandler();
 
 const chatForm = document.getElementById("chat-form");
 const textarea = document.getElementById("message");
