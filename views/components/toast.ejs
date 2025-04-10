@@ -3,14 +3,16 @@
     class=" absolute max-w-92 bg-[#3f3832] text-white shadow-2xs shadow-primary text-pretty text-center p-3 px-6 rounded-xl left-1/2 -translate-x-1/2 mt-10 animate-fade-down">
     <%= messages.toast %>
 </span>
-<%} %>
 
 <script>
-    setTimeout(() => {
-        const toast = document.getElementById("toast");
-        toast.classList.add("animate-fade-out-up");
+    const toast = document.getElementById("toast");
+    if (toast) {
         setTimeout(() => {
-            toast.remove();
-        }, 500)
-    }, 3000);
+            toast.classList.add("animate-fade-out-up");
+            setTimeout(() => {
+                toast.remove();
+            }, 500)
+        }, 3000);
+    }
 </script>
+<%} %>
