@@ -55,7 +55,10 @@ function renderNewConversationTap(conversation, userId, eventListener) {
     conversation.lastMessage,
   );
 
-  if (!conversation.lastMessage.isRead)
+  if (
+    !conversation.lastMessage.isRead &&
+    conversation.lastMessage.senderId !== userId
+  )
     conversationTap.classList.add("unread-conversation");
 
   conversationTap.appendChild(avatar);
