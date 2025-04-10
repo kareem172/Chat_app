@@ -12,6 +12,7 @@ module.exports = (req, res, next) => {
     }
   } catch (err) {
     req.isAuthenticated = false;
+    res.clearCookie("token");
   }
   next();
 };
