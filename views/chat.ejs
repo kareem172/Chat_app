@@ -5,30 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/output.css">
-    <script src="/js/chatScript.js" defer></script>
+    <script type="module" src="/js/chatScript.js" defer></script>
     <title>ChatApp | My Chats</title>
 </head>
 
 <body>
     <%- include("components/header.ejs") %>
         <main class=" px-6 py-4 flex-1  max-h-[calc(100dvh-135px)] overflow-clip grid grid-cols-[24rem_1fr]">
-            <aside
-                class="scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary pr-2 space-y-3">
+            <aside id="conversation-taps-container"
+                class="conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary p-2 space-y-3">
                 <!-- chats -->
                 <% for(let i=0; i < conversations.length; i++) {%>
-                    <div class="flex w-full gap-2 border-b-2 border-secondary p-2 cursor-pointer hover:bg-white/10 transition-colors"
-                        onclick="getConversation('<%= conversations[i].conversationId %>','<%= user._id %>')">
+                    <div class="conversation-tap <%= conversations[i].lastMessage.isRead ? '':'unread-conversation' %>"
+                        data-conversation-id='<%= conversations[i].conversationId %>' data-user-id='<%= user._id %>'>
                         <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
                             %> alt=<%= conversations[i].username.slice(0,2) %>>
-                            <div class="chat-info flex-1 max-w-full overflow-hidden">
+                            <div class="conversation-tap-info">
                                 <h3>
                                     <%= conversations[i].username %>
                                 </h3>
-                                <div class="flex justify-between items-baseline gap-4 max-w-full overflow-hidden">
-                                    <span class="text-sm text-ellipsis max-w-full overflow-hidden text-gray-300">
+                                <div class="conversation-tap-last-message-container ">
+                                    <span class="conversation-tap-last-message">
                                         <%= conversations[i].lastMessage.content %>
                                     </span>
-                                    <span class="text-xs text-gray-400 whitespace-nowrap">
+                                    <span class="conversation-tap-last-message-time">
                                         <%= conversations[i].lastMessage.sentAt.toLocaleString('en-US', {
                                             hour: 'numeric' ,minute: 'numeric' , hour12: true }) %>
                                     </span>
@@ -41,7 +41,8 @@
             <main class=" px-4 flex flex-col max-h-[calc(100dvh-170px)] h-full overflow-hidden max-w-full">
                 <section id="chat-area"
                     class="flex-1 flex py-4 px-2 flex-col gap-6 @container/chat max-h-full overflow-auto scrollbar scroll-smooth">
-                    <span class=" flex-1 flex justify-center items-center text-foreground/50"> Please select a chat to
+                    <span class=" flex-1 flex justify-center items-center text-foreground/50">
+                        Please select a chat to
                         start</span>
                 </section>
                 <footer>

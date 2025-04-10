@@ -73,6 +73,37 @@ textarea {
   @apply max-w-full overflow-clip text-wrap break-all whitespace-pre-wrap;
 }
 
+.conversation-tap {
+  @apply flex w-full cursor-pointer gap-2 border-b-2 border-secondary p-2 transition-colors hover:bg-white/10;
+}
+.unread-conversation {
+  & .conversation-tap-last-message::before {
+    @apply mr-1 inline-block h-2.5 w-2.5 rounded-full bg-primary content-[''];
+  }
+}
+
+.conversation-tap.active {
+  @apply bg-white/10;
+}
+
+.conversation-tap-avatar {
+  @apply aspect-square w-12 rounded-2xl border border-primary;
+}
+
+.conversation-tap-info {
+  @apply max-w-full flex-1 overflow-hidden;
+}
+
+.conversation-tap-last-message-container {
+  @apply flex max-w-full items-baseline justify-between gap-4 overflow-hidden;
+}
+.conversation-tap-last-message {
+  @apply max-w-full overflow-hidden text-sm text-ellipsis text-gray-300;
+}
+.conversation-tap-last-message-time {
+  @apply text-xs whitespace-nowrap text-gray-400;
+}
+
 .scrollbar::-webkit-scrollbar {
   @apply w-1 rounded-md bg-background;
 }

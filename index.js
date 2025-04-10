@@ -5,7 +5,6 @@ const session = require("express-session");
 const flash = require("express-flash");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const { Server } = require("socket.io");
 const { createServer } = require("http");
 
 //#region importing routes
@@ -27,7 +26,6 @@ const authMiddleware = require("./middlewares/authMiddleware");
 dotenv.config();
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
 const PORT = 5500;
 
 //#region database connection
@@ -39,6 +37,11 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 //#endregion
+
+// #region Socket.io
+const socketService = require("./services/socketService");
+const io = socketService.init(httpServer);
+// #endregion
 
 //#region middlewares
 app.use(express.static("public"));
@@ -73,12 +76,6 @@ app.use("/chat", chatRoute);
 //#region Api routes
 app.use("/api/conversation", conversationRoute);
 app.use("/api/auth", authRoute);
-//#endregion
-
-//#region socket.io
-io.on("connection", (socket) => {
-  console.log("A user connected");
-});
 //#endregion
 
 httpServer.listen(PORT, () => {
