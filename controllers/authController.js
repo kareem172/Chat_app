@@ -42,13 +42,19 @@ class AuthController {
         maxAge: 12 * 60 * 60 * 1000,
       });
       res.locals.token = token;
-      req.flash("success", "You have successfully signed in");
+      req.flash("toast", "You have successfully signed in");
       res.redirect("/");
     } catch (err) {
       console.log(err);
       req.flash("error", "Invalid email or password");
       return res.redirect("/signin");
     }
+  }
+
+  async signout(req, res) {
+    res.clearCookie("token");
+    req.flash("toast", "You have successfully signed out");
+    res.redirect("/");
   }
 }
 
