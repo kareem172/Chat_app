@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <script type="module" src="/js/signinScript.js"></script>
-    <title>ChatApp | Signin</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/output.css">
+        <script type="module" src="/js/signinScript.js"></script>
+        <title>ChatApp | Signin</title>
+    </head>
 
-<body>
-    <%- include("components/header.ejs") %>
-        <main class=" flex-1 container mx-auto px-4 py-8 flex flex-col justify-center items-center ">
-            <form id="signin-form" class="w-full" action="/signin" method="post">
+    <body>
+        <%- include("components/header.ejs") %>
+        <%- include("components/toast.ejs") %>
+        <main
+            class=" flex-1 container mx-auto px-4 py-8 flex flex-col justify-center items-center ">
+            <form id="signin-form" class="w-full" action="/signin"
+                method="post">
                 <header class="space-y-3 mb-12  text-center">
-                    <h1 class="text-3xl text-primary font-semibold">Welcome back The Best Chatting App</h1>
+                    <h1 class="text-3xl text-primary font-semibold">Welcome back
+                        The Best Chatting App</h1>
                     <p class="text-foreground/80">Enjoy the experience</p>
                 </header>
                 <div class="text-center">
@@ -32,13 +36,14 @@
                     <div class="flex flex-col gap-4">
                         <button class="btn">Signup</button>
                     </div>
-                    <p class="text-foreground/80 text-center">You don't have am acount? <a href="/signup"
+                    <p class="text-foreground/80 text-center">You don't have am
+                        acount? <a href="/signup"
                             class="text-primary">Signup</a>
                     </p>
                 </div>
             </form>
         </main>
         <%- include("components/footer.ejs") %>
-</body>
+    </body>
 
 </html>
