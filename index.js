@@ -5,6 +5,8 @@ const session = require("express-session");
 const flash = require("express-flash");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const { Server } = require("socket.io");
+const { createServer } = require("http");
 
 //#region importing routes
 // pages routes
@@ -24,6 +26,8 @@ const authMiddleware = require("./middlewares/authMiddleware");
 
 dotenv.config();
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer);
 const PORT = 5500;
 
 //#region database connection
@@ -71,6 +75,12 @@ app.use("/api/conversation", conversationRoute);
 app.use("/api/auth", authRoute);
 //#endregion
 
-app.listen(PORT, () => {
+//#region socket.io
+io.on("connection", (socket) => {
+  console.log("A user connected");
+});
+//#endregion
+
+httpServer.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
