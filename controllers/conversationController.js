@@ -61,10 +61,7 @@ class ConversationController {
       newMessage.save(),
       updatedConversation.save(),
     ]);
-    console.log(
-      "🚀 ~ file: conversationController.js:100 ~ message:",
-      message.receiverId.toString(),
-    );
+
     socket.to(message.receiverId.toString()).emit("newMessage", {
       message,
       conversationId,
