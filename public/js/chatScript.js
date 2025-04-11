@@ -30,3 +30,13 @@ conversationTaps.forEach((tap) => {
     await getConversationMessages(conversationId, userId);
   });
 });
+
+//#endregion
+const dialogBtn = document.getElementById("dialog-btn");
+const dialog = document.getElementById("dialog");
+const newChatForm = document.getElementById("new-chat-form");
+dialogBtn.addEventListener("click", () => {
+  dialog.showModal();
+});
+// initialize lucide icons
+lucide.createIcons();
