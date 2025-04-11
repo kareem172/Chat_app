@@ -6,8 +6,10 @@ import {
 import {
   renderNewConversationTap,
   renderNewMessage,
+  updateConversationTap,
 } from "../utils/uiElementsGenerators.js";
 import { getSocket } from "./socketManager.js";
+import { handleTapClick } from "../chatScript.js";
 function socketHandler() {
   const socket = getSocket();
   socket.on("connect", () => {
@@ -16,6 +18,9 @@ function socketHandler() {
   socket.on("newMessage", async ({ message, conversationId }) => {
     if (conversationId === currentConversationId) {
       renderNewMessage(message, false);
+      updateConversationTap(conversationId, message, async () => {
+        await handleTapClick(conversationId, message.receiverId);
+      });
       return;
     }
     const tap = document.querySelector(
@@ -24,10 +29,9 @@ function socketHandler() {
     if (tap) {
       const userId = tap.getAttribute("data-user-id");
       const conversation = await getConversation(conversationId);
-      console.log("🚀 ~ socket.on ~ conversation:", conversation);
       tap.remove();
       renderNewConversationTap(conversation, userId, async () => {
-        await getConversationMessages(conversationId, userId);
+        await handleTapClick(conversationId, message.receiverId);
       });
     }
   });
