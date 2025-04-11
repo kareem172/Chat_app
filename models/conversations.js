@@ -15,8 +15,10 @@ const conversationSchema = new mongoose.Schema(
     lastMessage: {
       messageId: { type: mongoose.Schema.Types.ObjectId, ref: "Message" },
       content: String,
+      receiverId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       senderId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       sentAt: Date,
+      isRead: { type: Boolean, default: false },
     },
   },
   { timestamps: true },
