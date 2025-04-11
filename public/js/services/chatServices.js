@@ -12,7 +12,7 @@ async function getConversationMessages(conversationId, userId) {
   const response = await fetch(
     `${baseURL}/api/conversation/${conversationId}/messages`,
   );
-  const { data: messages, status } = await response.json();
+  const { data: messages, status, remoteUser } = await response.json();
   if (status === "failed") {
     console.log("🚀 ~ getConversation ~ status:", status);
     return;
@@ -24,7 +24,7 @@ async function getConversationMessages(conversationId, userId) {
       ? messages[0].receiverId
       : messages[0].senderId;
   if (!currentConversationId || !currentParticipantId) return;
-  return messages;
+  return { messages, remoteUser };
 }
 
 async function sendMessage(message) {

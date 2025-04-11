@@ -10,6 +10,7 @@ import {
   renderNewMessage,
   renderMessages,
   updateConversationTap,
+  updateChatName,
 } from "./utils/uiElementsGenerators.js";
 
 const socket = initSocket();
@@ -27,16 +28,24 @@ const closeDialogBtns = document.querySelectorAll(
 );
 const newChatForm = document.getElementById("new-chat-form");
 const copyIdBtn = document.getElementById("copy-id-btn");
+
+const toggleSidebarBtn = document.getElementById("toggle-sidebar");
+const sidebar = document.getElementById("chat-sidebar");
 //#endregion
 
 //#region listeners
 export async function handleTapClick(conversationId, userId) {
-  const messages = await getConversationMessages(conversationId, userId);
+  const { messages, remoteUser } = await getConversationMessages(
+    conversationId,
+    userId,
+  );
   if (!messages) {
     alert("Something went wrong");
     return;
   }
+  if (remoteUser) updateChatName(remoteUser.username);
   renderMessages(messages, userId);
+  toggleSidebarBtn.click();
 }
 
 chatForm.addEventListener("submit", async (event) => {
@@ -124,6 +133,25 @@ newChatForm.addEventListener("submit", async (e) => {
   newChatForm.reset();
   dialog.close();
 });
+
+if (toggleSidebarBtn && sidebar) {
+  toggleSidebarBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("translate-x-[-100%]");
+  });
+
+  // Close sidebar when clicking outside on mobile
+  document.addEventListener("click", (e) => {
+    if (
+      window.innerWidth < 768 &&
+      !sidebar.contains(e.target) &&
+      !toggleSidebarBtn.contains(e.target) &&
+      !sidebar.classList.contains("translate-x-[-100%]")
+    ) {
+      sidebar.classList.add("translate-x-[-100%]");
+    }
+  });
+}
+
 //#endregion
 
 // initialize lucide icons

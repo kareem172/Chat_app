@@ -30,7 +30,12 @@ class ConversationController {
       },
       { $set: { isRead: true } },
     );
-    res.status(200).json({ data: messages, status: "success" });
+    const remoteUser = await User.findById(
+      messages[0].senderId === user._id
+        ? messages[0].receiverId
+        : messages[0].senderId,
+    );
+    res.status(200).json({ data: messages, remoteUser, status: "success" });
   }
 
   async sendMessage(req, res) {

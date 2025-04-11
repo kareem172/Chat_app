@@ -150,6 +150,11 @@ function updateConversationTap(conversationId, lastMessage, eventListener) {
   );
 }
 
+function updateChatName(userName) {
+  const chatName = document.querySelector(".remote-username");
+  chatName.textContent = userName;
+}
+
 export {
   renderMessages,
   renderNewMessage,
@@ -159,4 +164,5 @@ export {
   createChatBubble,
   scrollToBottom,
   updateConversationTap,
+  updateChatName,
 };

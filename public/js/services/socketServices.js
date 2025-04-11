@@ -1,7 +1,6 @@
 import {
   getConversation,
   currentConversationId,
-  getConversationMessages,
 } from "./chatServices.js";
 import {
   renderNewConversationTap,
@@ -38,7 +37,7 @@ function socketHandler() {
 
   socket.on("newConversation", async ({ conversation, userId }) => {
     renderNewConversationTap(conversation, userId, async () => {
-      await getConversationMessages(conversation.conversationId, userId);
+      await handleTapClick(conversation.conversationId, userId);
     });
   });
 

@@ -16,9 +16,12 @@
 
 <body data-user-id="<%= user._id %>">
     <%- include("components/header.ejs") %>
-        <main class=" px-6 py-4 flex-1  max-h-[calc(100dvh-135px)] overflow-clip grid grid-cols-[24rem_1fr]">
-            <aside class="flex flex-col gap-2">
-                <div class="flex justify-between items-center p-2">
+        <main
+            class="px-6 pb-4 flex-1 max-h-[calc(100dvh-135px)] overflow-clip grid md:grid-cols-[24rem_1fr] grid-cols-1 relative">
+            <aside
+                class="flex flex-col gap-2 md:static absolute inset-0 bg-background transform transition-transform duration-300 translate-x-[-100%] md:translate-x-0 md:border-r-2 border-secondary"
+                id="chat-sidebar">
+                <div class="flex justify-between items-center p-4">
                     <div class="flex items-center gap-2">
                         <h2 class="text-xl font-semibold text-primary/80">
                             My Chats
@@ -60,7 +63,7 @@
                     </button>
                 </div>
                 <div id="conversation-taps-container"
-                    class="flex-1 conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary p-2 space-y-3">
+                    class="flex-1 conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto  p-2 space-y-3">
                     <!-- chats -->
                     <% for(let i=0; i < conversations.length; i++) {%>
                         <div class="conversation-tap <%= (!conversations[i].lastMessage.isRead && conversations[i].lastMessage.senderId !== user._id) ? '':'unread-conversation' %>"
@@ -88,10 +91,16 @@
             </aside>
             <!-- Messages -->
             <main class=" px-4 flex flex-col max-h-[calc(100dvh-170px)] h-full overflow-hidden max-w-full">
+                <header id="chat-header"
+                    class="py-4 border-b border-secondary md:hidden flex justify-between items-end">
+                    <button class="shadow-lg" id="toggle-sidebar" aria-label="Toggle Sidebar">
+                        <i data-lucide="menu" class="text-primary"></i>
+                    </button>
+                    <h2 class="text-xl font-semibold text-primary/80 remote-username"></h2>
+                </header>
                 <section id="chat-area"
                     class="flex-1 flex py-4 px-2 flex-col gap-6 @container/chat max-h-full overflow-auto scrollbar scroll-smooth">
-                    <span class=" flex-1 flex justify-center items-center text-foreground/50">
-                        Please select a chat to
+                    <span class=" flex-1 flex justify-center items-center text-foreground/50">Please select a chat to
                         start</span>
                 </section>
                 <footer>
@@ -108,6 +117,7 @@
             </main>
         </main>
         <%- include("components/footer.ejs") %>
+
 </body>
 
 </html>
