@@ -24,8 +24,11 @@ async function getConversationMessages(conversationId, userId) {
   }
   if (messages?.length === 0) return;
   currentConversationId = conversationId;
-  currentParticipantId = messages.find((m) => m.senderId !== userId).senderId;
-
+  currentParticipantId =
+    messages[0].senderId === userId
+      ? messages[0].receiverId
+      : messages[0].senderId;
+  if (!currentConversationId || !currentParticipantId) return;
   renderMessages(messages, userId);
 }
 
@@ -69,8 +72,34 @@ async function getConversation(conversationId) {
   return conversation;
 }
 
+async function createNewConversation(receiverId, message) {
+  const baseURL = new URL(window.location.href).origin;
+  const response = await fetch(`${baseURL}/api/conversation/newConversation`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      receiverId,
+      message,
+    }),
+  });
+  const {
+    data: newConversation,
+    status,
+    message: errorMessage,
+  } = await response.json();
+  if (status === "failed") {
+    console.error("🚀 ~ newConversation ~ status:", status);
+    console.error("🚀 ~ newConversation ~ error Message:", errorMessage);
+    return;
+  }
+  return newConversation;
+}
+
 export {
   getConversationMessages,
+  createNewConversation,
   sendMessage,
   getConversation,
   currentConversationId,
