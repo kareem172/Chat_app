@@ -1,6 +1,8 @@
 const { Message } = require("../models/messages");
 const { Conversation } = require("../models/conversations");
+const { User } = require("../models/users");
 const { getSocket } = require("../services/socketService");
+const { formatConversation } = require("../utils/conversationUtils");
 class ConversationController {
   async getConversation(req, res) {
     const user = req.user;
@@ -9,24 +11,12 @@ class ConversationController {
       "participants",
       "username avatar",
     );
-    console.log(
-      "🚀 ~ ConversationController ~ getConversation ~ conversation:",
-      conversation.toObject(),
-    );
-    const remoteUser = conversation.participants.find(
-      (p) => p._id.toString() !== user._id.toString(),
-    );
-    const formattedConversations = {
-      conversationId: conversation._id,
-      username: remoteUser.username,
-      avatar: remoteUser.avatar,
-      lastMessage: conversation.lastMessage,
-      updatedAt: conversation.updatedAt,
-    };
+    const formattedConversations = formatConversation(conversation, user);
     res.status(200).json({ data: formattedConversations, status: "success" });
   }
 
   async getConversationMessages(req, res) {
+    const user = req.user;
     const { conversationId } = req.params;
 
     const messages = await Message.find({ conversationId }).sort({
@@ -80,6 +70,77 @@ class ConversationController {
       conversationId,
     });
     res.status(200).json({ data: message, status: "success" });
+  }
+
+  async createConversation(req, res) {
+    const user = req.user;
+    const { receiverId, message } = req.body;
+
+    let lastMessage = null;
+    if (!receiverId || !message) {
+      return res.status(400).json({
+        message: "Missing required fields",
+        status: "failed",
+      });
+    }
+    if (user._id.toString() === receiverId) {
+      return res.status(400).json({
+        message: "You can't chat with yourself",
+        status: "failed",
+      });
+    }
+    const remoteUser = await User.findById(receiverId);
+    if (!remoteUser) {
+      return res.status(400).json({
+        message: "User not found",
+        status: "failed",
+      });
+    }
+
+    const isExist = await Conversation.findOne({
+      participants: { $all: [user._id, receiverId] },
+    });
+    if (isExist) {
+      return res.status(400).json({
+        message: "Conversation already exists",
+        status: "failed",
+      });
+    }
+    const newConversation = new Conversation({
+      participants: [user._id, receiverId],
+      lastMessage,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    if (message) {
+      lastMessage = new Message({
+        conversationId: newConversation._id,
+        senderId: user._id,
+        receiverId,
+        content: message,
+        type: "text",
+        sentAt: new Date(),
+        isRead: false,
+      });
+      lastMessage = await lastMessage.save();
+      newConversation.lastMessage = lastMessage;
+    }
+    await newConversation.save();
+    const resConversation = await Conversation.findById(
+      newConversation._id,
+    ).populate("participants", "username avatar");
+    console.log(resConversation.lastMessage);
+    const formattedConversation = formatConversation(resConversation, user);
+    const remoteFormattedConversation = formatConversation(
+      resConversation,
+      remoteUser,
+    );
+    const socket = getSocket();
+    socket.to(receiverId).emit("newConversation", {
+      conversation: remoteFormattedConversation,
+      userId: receiverId,
+    });
+    res.status(200).json({ data: formattedConversation, status: "success" });
   }
 }
 

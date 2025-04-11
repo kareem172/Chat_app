@@ -10,5 +10,6 @@ router.get(
 );
 
 router.post("/:conversationId/messages", conversationController.sendMessage);
+router.post("/newConversation", conversationController.createConversation);
 
 module.exports = router;
