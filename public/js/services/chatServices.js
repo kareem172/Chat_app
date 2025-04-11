@@ -1,8 +1,3 @@
-import {
-  renderMessages,
-  renderNewMessage,
-} from "../utils/uiElementsGenerators.js";
-
 let currentConversationId = null;
 let currentParticipantId = null;
 
@@ -29,18 +24,11 @@ async function getConversationMessages(conversationId, userId) {
       ? messages[0].receiverId
       : messages[0].senderId;
   if (!currentConversationId || !currentParticipantId) return;
-  renderMessages(messages, userId);
+  return messages;
 }
 
-async function sendMessage(event) {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const message = formData.get("message");
-  if (!message || !currentConversationId || !currentParticipantId) {
-    alert("Please enter a message");
-    return;
-  }
-
+async function sendMessage(message) {
+  if (!currentConversationId || !currentParticipantId) return;
   const baseURL = new URL(window.location.href).origin;
   const response = await fetch(
     `${baseURL}/api/conversation/${currentConversationId}/messages`,
@@ -55,10 +43,17 @@ async function sendMessage(event) {
       }),
     },
   );
-  const { data: newMessage } = await response.json();
-  if (!newMessage) return;
-  renderNewMessage(newMessage, true);
-  event.target.reset();
+  const {
+    data: newMessage,
+    status,
+    message: errorMessage,
+  } = await response.json();
+  if (status === "failed") {
+    console.error("🚀 ~ sendMessage ~ status:", status);
+    console.error("🚀 ~ sendMessage ~ error Message:", errorMessage);
+    return;
+  }
+  return newMessage;
 }
 
 async function getConversation(conversationId) {
