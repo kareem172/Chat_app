@@ -19,9 +19,17 @@
         <main class=" px-6 py-4 flex-1  max-h-[calc(100dvh-135px)] overflow-clip grid grid-cols-[24rem_1fr]">
             <aside class="flex flex-col gap-2">
                 <div class="flex justify-between items-center p-2">
-                    <h2 class="text-xl font-semibold text-primary/80">
-                        My Chats
-                    </h2>
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-xl font-semibold text-primary/80">
+                            My Chats
+                        </h2>
+                        <button id="copy-id-btn"
+                            class="flex items-center gap-1 text-sm px-2 py-1 rounded-md bg-primary/10 hover:bg-primary/20 transition-colors duration-200"
+                            title="Click to copy your ID">
+                            <span class="text-primary/80">Copy your ID</span>
+                            <i data-lucide="copy" class="w-4 h-4 text-primary/80"></i>
+                        </button>
+                    </div>
                     <dialog id="dialog">
                         <form method="dialog" id="new-chat-form" class="flex flex-col gap-3">
                             <header class="flex flex-col-reverse justify-between items-stretch mb-4">
