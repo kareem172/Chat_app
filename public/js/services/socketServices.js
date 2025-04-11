@@ -32,6 +32,12 @@ function socketHandler() {
     }
   });
 
+  socket.on("newConversation", async ({ conversation, userId }) => {
+    renderNewConversationTap(conversation, userId, async () => {
+      await getConversationMessages(conversation.conversationId, userId);
+    });
+  });
+
   socket.on("disconnect", () => {
     console.log("Disconnected from server");
     window.location.href = "/";
