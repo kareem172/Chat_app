@@ -1,4 +1,5 @@
 const { Conversation } = require("../models/conversations");
+const { formatConversation } = require("../utils/conversationUtils");
 class ChatController {
   async getAllChats(req, res) {
     if (!req.isAuthenticated) {
@@ -13,17 +14,7 @@ class ChatController {
       .sort({ updatedAt: -1 });
 
     const formattedConversations = conversations.map((con) => {
-      const remoteUser = con.participants.find(
-        (p) => p._id.toString() !== user._id.toString(),
-      );
-
-      return {
-        conversationId: con._id,
-        username: remoteUser.username,
-        avatar: remoteUser.avatar,
-        lastMessage: con.lastMessage,
-        updatedAt: con.updatedAt,
-      };
+      return formatConversation(con, user);
     });
     res.render("chat.ejs", {
       user,
