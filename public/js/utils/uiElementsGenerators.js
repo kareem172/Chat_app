@@ -97,7 +97,6 @@ function createConversationInfoSection(username, lastMessage) {
   lastMessageElement.classList.add("conversation-tap-last-message");
 
   const lastMessageTimeElement = document.createElement("span");
-  console.log(lastMessage.sentAt);
   lastMessageTimeElement.textContent = new Date(
     lastMessage.sentAt,
   ).toLocaleString("en-US", {
@@ -116,6 +115,41 @@ function createConversationInfoSection(username, lastMessage) {
   return infoSection;
 }
 
+function updateConversationTap(conversationId, lastMessage, eventListener) {
+  const conversationTapsContainer = document.getElementById(
+    "conversation-taps-container",
+  );
+  const conversationTap = document.querySelector(
+    `.conversation-tap[data-conversation-id="${conversationId}"]`,
+  );
+
+  if (!conversationTap) return;
+  const lastMessageElement = conversationTap.querySelector(
+    ".conversation-tap-last-message",
+  );
+
+  const lastMessageTimeElement = conversationTap.querySelector(
+    ".conversation-tap-last-message-time",
+  );
+
+  lastMessageElement.textContent = lastMessage.content;
+  lastMessageTimeElement.textContent = new Date(
+    lastMessage.sentAt,
+  ).toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
+  conversationTap.removeEventListener("click", eventListener);
+  conversationTap.addEventListener("click", eventListener);
+
+  conversationTapsContainer.insertBefore(
+    conversationTap,
+    conversationTapsContainer.firstChild,
+  );
+}
+
 export {
   renderMessages,
   renderNewMessage,
@@ -124,4 +158,5 @@ export {
   createConversationInfoSection,
   createChatBubble,
   scrollToBottom,
+  updateConversationTap,
 };
