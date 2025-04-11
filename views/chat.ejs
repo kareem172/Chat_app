@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/output.css">
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/js/chatScript.js" defer></script>
     <title>ChatApp | My Chats</title>
 </head>
@@ -12,30 +17,67 @@
 <body>
     <%- include("components/header.ejs") %>
         <main class=" px-6 py-4 flex-1  max-h-[calc(100dvh-135px)] overflow-clip grid grid-cols-[24rem_1fr]">
-            <aside id="conversation-taps-container"
-                class="conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary p-2 space-y-3">
-                <!-- chats -->
-                <% for(let i=0; i < conversations.length; i++) {%>
-                    <div class="conversation-tap <%= (!conversations[i].lastMessage.isRead && conversations[i].lastMessage.senderId !== user._id) ? '':'unread-conversation' %>"
-                        data-conversation-id='<%= conversations[i].conversationId %>' data-user-id='<%= user._id %>'>
-                        <img class="rounded-2xl w-12 aspect-square border border-primary" src=<%=conversations[i].avatar
-                            %> alt=<%= conversations[i].username.slice(0,2) %>>
-                            <div class="conversation-tap-info">
-                                <h3>
-                                    <%= conversations[i].username %>
-                                </h3>
-                                <div class="conversation-tap-last-message-container ">
-                                    <span class="conversation-tap-last-message">
-                                        <%= conversations[i].lastMessage.content %>
-                                    </span>
-                                    <span class="conversation-tap-last-message-time">
-                                        <%= conversations[i].lastMessage.sentAt.toLocaleString('en-US', {
-                                            hour: 'numeric' ,minute: 'numeric' , hour12: true }) %>
-                                    </span>
-                                </div>
+            <aside class="flex flex-col gap-2">
+                <div class="flex justify-between items-center p-2">
+                    <h2 class="text-xl font-semibold text-primary/80">
+                        My Chats
+                    </h2>
+                    <dialog id="dialog">
+                        <form id="new-chat-form" class="flex flex-col gap-3">
+                            <header class="flex flex-col-reverse justify-between items-stretch mb-4">
+                                <h2 class="text-xl font-semibold text-primary/80">
+                                    Start a new chat
+                                </h2>
+                                <button type="cancel" formmethod="dialog"
+                                    class="cursor-pointer hover:*:text-foreground/50 self-end">
+                                    <i data-lucide="x" class="transition-colors duration-200"></i>
+                                </button>
+                            </header>
+                            <div class="form-group">
+                                <label for="friendId">Friend ID</label>
+                                <input type="text" name="friendId" id="friendId" />
                             </div>
-                    </div>
-                    <%} %>
+                            <div class="form-group">
+                                <label for="dialogMessage">Message</label>
+                                <input type="text" name="message" id="dialogMessage" />
+                            </div>
+                            <footer class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-3">
+                                <button type="cancel" formmethod="dialog" class="btn-secondary">Cancel</button>
+                                <button type="submit" class="btn">Start
+                                    Chat</button>
+                            </footer>
+                        </form>
+                    </dialog>
+                    <button class="cursor-pointer hover:*:text-primary/50" title="start new chat" id="dialog-btn">
+                        <i data-lucide="circle-plus" class="text-primary transition-colors duration-200"></i>
+                    </button>
+                </div>
+                <div id="conversation-taps-container"
+                    class="flex-1 conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto border-r-2 border-secondary p-2 space-y-3">
+                    <!-- chats -->
+                    <% for(let i=0; i < conversations.length; i++) {%>
+                        <div class="conversation-tap <%= (!conversations[i].lastMessage.isRead && conversations[i].lastMessage.senderId !== user._id) ? '':'unread-conversation' %>"
+                            data-conversation-id='<%= conversations[i].conversationId %>'
+                            data-user-id='<%= user._id %>'>
+                            <img class="rounded-2xl w-12 aspect-square border border-primary"
+                                src=<%=conversations[i].avatar %> alt=<%= conversations[i].username.slice(0,2) %>>
+                                <div class="conversation-tap-info">
+                                    <h3>
+                                        <%= conversations[i].username %>
+                                    </h3>
+                                    <div class="conversation-tap-last-message-container ">
+                                        <span class="conversation-tap-last-message">
+                                            <%= conversations[i].lastMessage.content %>
+                                        </span>
+                                        <span class="conversation-tap-last-message-time">
+                                            <%= conversations[i].lastMessage.sentAt.toLocaleString('en-US', {
+                                                hour: 'numeric' ,minute: 'numeric' , hour12: true }) %>
+                                        </span>
+                                    </div>
+                                </div>
+                        </div>
+                        <%} %>
+                </div>
             </aside>
             <!-- Messages -->
             <main class=" px-4 flex flex-col max-h-[calc(100dvh-170px)] h-full overflow-hidden max-w-full">
@@ -50,7 +92,9 @@
                         <textarea name="message" id="message" placeholder="Type your message"
                             class="scrollbar w-full max-h-[5rem] min-h-[2.5rem] resize-none field-sizing-content rounded-2xl border border-gray-300 px-4 py-2 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                             rows="1"></textarea>
-                        <button type="submit" class="btn">Send</button>
+                        <button type="submit" class=" cursor-pointer p-2 bg-primary rounded-2xl aspect-square" title="send message">
+                            <i data-lucide="send" class="transition-colors duration-200 "></i>
+                        </button>
                     </form>
                 </footer>
             </main>
