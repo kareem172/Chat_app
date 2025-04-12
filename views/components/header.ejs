@@ -1,11 +1,14 @@
 <header class=" bg-secondary py-4">
-    <div class="container flex justify-between items-center gap-3">
+    <div class="container flex justify-between items-center gap-3 flex-wrap">
         <a href="/" class="mr-auto">
-            <h1 class="text-2xl font-bold text-primary ">Chat App</h1>
+            <h1 class="text-2xl font-bold text-primary ">CTRL Chat</h1>
         </a>
         <% if(!isAuthenticated){ %>
-        <a class="btn-secondary" href="/signin">Signin</a>
-        <a class="btn" href="/signup">Join Now</a>
+        <div class="flex gap-2 justify-end flex-1">
+            <a class="btn-secondary hidden sm:inline-block"
+                href="/signin">Signin</a>
+            <a class="btn text-nowrap" href="/signup">Join Now</a>
+        </div>
         <% }else{ %>
         <form action="/api/auth/signout" method="POST">
             <button class="btn-secondary" type="submit">Sign Out</button>

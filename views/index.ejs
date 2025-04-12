@@ -1,61 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <title>CTRL Chat</title>
+  </head>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/output.css">
-        <title>ChatApp</title>
-    </head>
+  <body>
+    <%- include("components/toast.ejs") %> <%- include("components/header.ejs")
+    %>
+    <main
+      class="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-8"
+    >
+      <div class="mx-auto mb-12 max-w-2xl text-center">
+        <h2 class="mb-4 text-4xl font-bold text-primary text-balance">
+          Welcome to CTRL Chat App
+        </h2>
+        <p class="mb-8 text-lg">Connect with friends and family in real-time</p>
+        <a
+          href="/chat"
+          class="rounded-lg bg-primary px-6 py-3 text-white transition-colors hover:bg-primary/90"
+        >
+          Start Chatting
+        </a>
+      </div>
 
-    <body>
-        <%- include("components/toast.ejs") %>
-        <%- include("components/header.ejs") %>
-        <main
-            class=" flex-1 container mx-auto px-4 py-8 flex flex-col justify-center items-center ">
-
-            <div class="max-w-2xl mx-auto text-center mb-12">
-                <h2 class="text-4xl font-bold text-primary mb-4">Welcome to Chat
-                    App</h2>
-                <p class="text-lg mb-8">Connect with friends and family in
-                    real-time</p>
-                <a href="/chat"
-                    class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors">
-                    Start Chatting
-                </a>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <div
-                    class="p-6 sm:col-span-2 bg-secondary rounded-lg text-center">
-                    <h3
-                        class="text-primary/80 text-xl font-semibold mb-3">Real-time
-                        Messaging</h3>
-                    <p>Send and receive messages instantly with our real-time
-                        chat system</p>
-                </div>
-                <div
-                    class="p-6 bg-secondary rounded-lg text-center sm:row-span-2 grid place-content-center">
-                    <h3 class="text-primary/80 text-xl font-semibold mb-3">User
-                        Friendly</h3>
-                    <p>Simple and intuitive interface for the best chat
-                        experience</p>
-                </div>
-                <div class="p-6 bg-secondary rounded-lg text-center">
-                    <h3 class="text-primary/80 text-xl font-semibold mb-3">File
-                        Sharing</h3>
-                    <p>Share files, images and documents seamlessly with other
-                        users</p>
-                </div>
-                <div class="p-6 bg-secondary rounded-lg text-center">
-                    <h3 class="text-primary/80 text-xl font-semibold mb-3">Group
-                        Chats</h3>
-                    <p>Create and manage group conversations with multiple
-                        participants</p>
-                </div>
-            </div>
-        </main>
-        <%- include("components/footer.ejs") %>
-    </body>
-
+      <div class="mb-12 grid gap-8 md:grid-cols-3">
+        <div class="rounded-lg bg-secondary p-6 text-center sm:col-span-2">
+          <h3 class="mb-3 text-xl font-semibold text-primary/80">
+            Real-time Messaging
+          </h3>
+          <p>
+            Send and receive messages instantly with our real-time chat system
+          </p>
+        </div>
+        <div
+          class="grid place-content-center rounded-lg bg-secondary p-6 text-center sm:row-span-2"
+        >
+          <h3 class="mb-3 text-xl font-semibold text-primary/80">
+            User Friendly
+          </h3>
+          <p>Simple and intuitive interface for the best chat experience</p>
+        </div>
+        <div class="rounded-lg bg-secondary p-6 text-center">
+          <h3
+            class="mb-3 flex items-baseline justify-center gap-2 text-xl font-semibold text-primary/80"
+          >
+            <span> File Sharing </span>
+            <span
+              class="text-shadow text-xs text-foreground text-shadow-primary"
+            >
+              (coming soon)
+            </span>
+          </h3>
+          <p>Share files, images and documents seamlessly with other users</p>
+        </div>
+        <div class="rounded-lg bg-secondary p-6 text-center">
+          <h3
+            class="mb-3 flex items-baseline justify-center gap-2 text-xl font-semibold text-primary/80"
+          >
+            <span> Group Chats </span>
+            <span
+              class="text-shadow text-xs text-foreground text-shadow-primary"
+            >
+              (coming soon)
+            </span>
+          </h3>
+          <p>
+            Create and manage group conversations with multiple participants
+          </p>
+        </div>
+      </div>
+    </main>
+    <%- include("components/footer.ejs") %>
+  </body>
 </html>
