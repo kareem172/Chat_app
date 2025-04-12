@@ -17,7 +17,7 @@
 <body data-user-id="<%= user._id %>">
     <%- include("components/header.ejs") %>
         <main
-            class="px-6 pb-4 flex-1 max-h-[calc(100dvh-135px)] overflow-clip grid md:grid-cols-[24rem_1fr] grid-cols-1 relative">
+            class="px-2 md:px-6 pb-4 flex-1 max-h-[calc(100dvh-80px)] overflow-clip grid md:grid-cols-[24rem_1fr] grid-cols-1 relative">
             <aside
                 class="flex flex-col gap-2 md:static absolute inset-0 bg-background transform transition-transform duration-300 translate-x-[-100%] md:translate-x-0 md:border-r-2 border-secondary"
                 id="chat-sidebar">
@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <div id="conversation-taps-container"
-                    class="flex-1 conversation-taps-container scrollbar max-h-[calc(100dvh-170px)] overflow-auto  p-2 space-y-3">
+                    class="flex-1 conversation-taps-container scrollbar max-h-[calc(100dvh-90px)] overflow-auto  p-2 space-y-3">
                     <!-- chats -->
                     <% for(let i=0; i < conversations.length; i++) {%>
                         <div class="conversation-tap <%= (!conversations[i].lastMessage.isRead && conversations[i].lastMessage.senderId !== user._id) ? '':'unread-conversation' %>"
@@ -90,7 +90,7 @@
                 </div>
             </aside>
             <!-- Messages -->
-            <main class=" px-4 flex flex-col max-h-[calc(100dvh-170px)] h-full overflow-hidden max-w-full">
+            <main class=" md:px-4 flex flex-col max-h-[calc(100dvh-90px)] h-full overflow-hidden max-w-full">
                 <header id="chat-header"
                     class="py-4 border-b border-secondary md:hidden flex justify-between items-end">
                     <button class="shadow-lg" id="toggle-sidebar" aria-label="Toggle Sidebar">
@@ -116,7 +116,7 @@
                 </footer>
             </main>
         </main>
-        <%- include("components/footer.ejs") %>
+        <%-// include("components/footer.ejs") %>
 
 </body>
 
