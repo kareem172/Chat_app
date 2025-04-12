@@ -45,6 +45,7 @@ class AuthController {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        maxAge: 86400000
       });
       res.locals.token = token;
       req.flash("toast", "You have successfully signed in");
