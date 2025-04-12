@@ -11,7 +11,7 @@ function init(server) {
     },
     cookie: {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24,
+      expires: new Date(Date.now() + process.env.COOKIE_EXPIRES_IN),
     },
   });
   connect();

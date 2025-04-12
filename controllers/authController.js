@@ -33,13 +33,13 @@ class AuthController {
       if (!isPasswordValid) throw new Error("Invalid password");
       delete user.password;
       const token = jwt.sign(user.toObject(), process.env.JWT_SECRET, {
-        expiresIn: "12h",
+        expiresIn: process.env.JWT_EXPIRES_IN,
       });
       res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-        maxAge: 12 * 60 * 60 * 1000,
+        expires: new Date(Date.now() + process.env.COOKIE_EXPIRES_IN),
       });
       res.locals.token = token;
       req.flash("toast", "You have successfully signed in");
