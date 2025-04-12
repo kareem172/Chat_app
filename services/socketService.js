@@ -11,7 +11,7 @@ function init(server) {
     },
     cookie: {
       httpOnly: true,
-      expires: new Date(Date.now() + process.env.COOKIE_EXPIRES_IN),
+      expires: new Date(Date.now() + Number(process.env.COOKIE_EXPIRES_IN)),
     },
   });
   connect();
