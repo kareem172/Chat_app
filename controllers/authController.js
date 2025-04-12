@@ -45,7 +45,6 @@ class AuthController {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-        expires: new Date(Date.now() + Number(process.env.COOKIE_EXPIRES_IN)),
       });
       res.locals.token = token;
       req.flash("toast", "You have successfully signed in");
